@@ -12,17 +12,17 @@ class PhoneNumberTextField extends StatefulWidget {
 class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final int _fieldsLimit = 3;
+  String phoneNumber;
+
   @override
   Widget build(BuildContext context) {
+    final addPhoneNumber = Provider.of<AddPhoneNumberField>(context);
     return Container(
       child: Column(
         children: [
           Consumer<AddPhoneNumberField>(builder: (context, tf, _) {
             return ListView.builder(scrollDirection: Axis.vertical,
     shrinkWrap: true, physics: NeverScrollableScrollPhysics(), itemCount: tf.phoneNumbers.length, itemBuilder: (context, index) {
-    //           if (tf.phoneNumbers.isEmpty || index == tf.phoneNumbers.length) {
-    //             return Container(width: double.infinity, child: RaisedButton(child: Text('Add another phone number'), onPressed: tf.phoneNumbers.length < _fieldsLimit ? () async { await Provider.of<AddPhoneNumberField>(context, listen: false).addTextField('');} : null));
-    // }
               return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -32,7 +32,6 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                   style: Theme.of(context).textTheme.bodyText1,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    
                       fillColor: Colors.white,
                       filled: true,
                       hintText: 'phone number'.toUpperCase(),
@@ -42,17 +41,16 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                       border: InputBorder.none),
                   validator: (value) =>
                       value.isEmpty ? 'Please enter your phone number' : null,
-                  // onSaved: (value) => _username = value,
+                  onSaved: (value) => addPhoneNumber.phoneNumbers.add(value),
                 ),
               ),
             );
             });
           },),
-          Container(width: double.infinity, child: RaisedButton(child: Text('Add another phone number'), onPressed: () async { 
-            if (Provider.of<AddPhoneNumberField>(context).phoneNumbers.length < _fieldsLimit) {
-              await Provider.of<AddPhoneNumberField>(context, listen: false).addTextField('');
+          Container(width: double.infinity, child: RaisedButton(child: Text('Add another phone number'), onPressed: () async {
+            if (addPhoneNumber.phoneNumbertextFields.length < _fieldsLimit) {
+              await addPhoneNumber.addTextField('');
             }
-            
           }))
         ],
       ),

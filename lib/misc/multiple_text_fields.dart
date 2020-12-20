@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-
 class AddPhoneNumberField extends ChangeNotifier {
-  List<String> phoneNumbers = [''];
+  List<String> phoneNumberTextFields = [''];
+  List<String> phoneNumbers = [];
   addTextField(String phoneNumber) async {
-    // PhoneNumber pn = PhoneNumber(phoneNumber);
-    phoneNumbers.add(phoneNumber);
+    phoneNumberTextFields.add(phoneNumber);
     notifyListeners();
   }
 }
 
 class AddAddressField extends ChangeNotifier {
-  List<String> addresses = [''];
+  List<String> addressTextFields = [''];
+  List<String> addresses = [];
   addTextField(String address) async {
-    addresses.add(address);
+    addressTextFields.add(address);
     notifyListeners();
   }
 }

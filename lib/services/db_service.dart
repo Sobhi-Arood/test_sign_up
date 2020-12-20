@@ -6,6 +6,6 @@ class DBService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> createUserIntoDB(UserEntity user) async {
-    await _firestore.collection('Users').add(user.toJson());
+    await _firestore.collection('Users').doc(user.userId).set(user.toJson());
   }
 }
