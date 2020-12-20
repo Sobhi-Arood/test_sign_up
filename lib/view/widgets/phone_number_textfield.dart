@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_sign_up/misc/multiple_text_fields.dart';
 import 'package:test_sign_up/view/widgets/text_field_widget.dart';
-
 import 'customs.dart';
 
 class PhoneNumberTextField extends StatefulWidget {
