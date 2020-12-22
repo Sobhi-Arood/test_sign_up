@@ -10,16 +10,23 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-
   final formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: SingleChildScrollView(child: Container(child: Form(key: formKey, child: Column(children: _listFormInputs(),),),),)
-    );
+        appBar: AppBar(title: Text('Login')),
+        body: SingleChildScrollView(
+          child: Container(
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: _listFormInputs(),
+              ),
+            ),
+          ),
+        ));
   }
 
   @override
@@ -39,71 +46,64 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void validateAndSubmit() async {
-    showDialog(
-        context: context,
-        builder: (context) => Center(child: CircularProgressIndicator()));
     if (validateAndSave()) {
-      await AuthServices.instance.loginUser(_emailController.value.text, _passwordController.value.text);
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => Center(child: CircularProgressIndicator()));
+      await AuthServices.instance.loginUser(
+          _emailController.value.text, _passwordController.value.text);
       Navigator.of(context, rootNavigator: true).pop();
     }
   }
 
   List<Widget> _listFormInputs() {
-      return [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(boxShadow: [customBoxShadow]),
-            child: TextFormField(
-              controller: _emailController,
-              style: Theme.of(context).textTheme.bodyText1,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  hintText: 'email'.toUpperCase(),
-                  hintStyle: Theme.of(context).textTheme.bodyText2,
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 20.0),
-                  border: InputBorder.none),
-              validator: (value) => value.isEmpty ? 'Please enter email' : null,
-              // onSaved: (value) => _email = value,
-            ),
-          ),
+    return [
+      Container(
+        decoration: BoxDecoration(boxShadow: [customBoxShadow]),
+        child: TextFormField(
+          controller: _emailController,
+          style: Theme.of(context).textTheme.bodyText1,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              hintText: 'email'.toUpperCase(),
+              hintStyle: Theme.of(context).textTheme.bodyText2,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              border: InputBorder.none),
+          validator: (value) => value.isEmpty ? 'Please enter email' : null,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(boxShadow: [customBoxShadow]),
-            child: TextFormField(
-              controller: _passwordController,
-              style: Theme.of(context).textTheme.bodyText1,
-              decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  hintText: 'password'.toUpperCase(),
-                  hintStyle: Theme.of(context).textTheme.bodyText2,
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 20.0),
-                  border: InputBorder.none),
-              obscureText: true,
-              validator: (value) =>
-                  value.isEmpty ? 'Please enter password' : null,
-              // onSaved: (value) => _password = value,
-            ),
-          ),
+      ),
+      Container(
+        decoration: BoxDecoration(boxShadow: [customBoxShadow]),
+        child: TextFormField(
+          controller: _passwordController,
+          style: Theme.of(context).textTheme.bodyText1,
+          decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              hintText: 'password'.toUpperCase(),
+              hintStyle: Theme.of(context).textTheme.bodyText2,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              border: InputBorder.none),
+          obscureText: true,
+          validator: (value) => value.isEmpty ? 'Please enter password' : null,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: LoginButton('sign in', validateAndSubmit),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        FlatButton(
-          child: Text('New user? Register'),
-          onPressed: () => Navigator.of(context).pushNamed(RouteNames.regPage),
-        ),
-      ];
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: LoginButton('sign in', validateAndSubmit),
+      ),
+      SizedBox(
+        height: 30,
+      ),
+      FlatButton(
+        child: Text('New user? Register'),
+        onPressed: () => Navigator.of(context).pushNamed(RouteNames.regPage),
+      ),
+    ];
   }
 }

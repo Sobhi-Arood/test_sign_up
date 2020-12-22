@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:test_sign_up/main.dart';
+import 'package:provider/provider.dart';
+import 'package:test_sign_up/misc/multiple_text_fields.dart';
 import 'package:test_sign_up/view/sign_in_page.dart';
 import 'package:test_sign_up/view/sign_up_page.dart';
+import 'package:test_sign_up/view/welcome_page.dart';
+
+import 'misc/image_file.dart';
 
 class RouteNames {
   static const String loginPage = 'login_page';
@@ -20,7 +24,14 @@ class RoutesGenerator {
         return MaterialPageRoute(builder: (_) => SignInPage());
 
       case RouteNames.regPage:
-        return MaterialPageRoute(builder: (_) => SignUpPage());
+        return MaterialPageRoute(
+            builder: (_) => MultiProvider(providers: [
+                  ChangeNotifierProvider(
+                      create: (context) => AddAddressField()),
+                  ChangeNotifierProvider(
+                      create: (context) => AddPhoneNumberField()),
+                  ChangeNotifierProvider(create: (context) => AddImage()),
+                ], child: SignUpPage()));
 
       default:
         return _errorRoute();

@@ -20,10 +20,13 @@ class LoginButton extends StatelessWidget {
           boxShadow: [
             customBoxShadow,
           ],
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.centerRight,
-              colors: gradientColor)),
+          color: Theme.of(context).primaryColor,
+          // gradient: LinearGradient(List: gradientColor.toList(), begin: Alignment.topCenter, end: Alignment.centerRight)
+          // gradient: LinearGradient(
+          //     begin: Alignment.topCenter,
+          //     end: Alignment.centerRight,
+          // ),
+      ),
       child: FlatButton(
         onPressed: onPress,
         child: Text(
